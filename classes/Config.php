@@ -79,6 +79,9 @@ class Config {
 	/** base directory for local cache (must be writable) */
 	const CACHE_DIR = "CACHE_DIR";
 
+	/** directory for local plugins */
+	const PLUGINS_LOCAL_DIR = "PLUGINS_LOCAL_DIR";
+
 	/** auto create users authenticated via external modules */
 	const AUTH_AUTO_CREATE = "AUTH_AUTO_CREATE";
 
@@ -249,6 +252,7 @@ class Config {
 		Config::PHP_EXECUTABLE => [ "/usr/bin/php",					Config::T_STRING ],
 		Config::LOCK_DIRECTORY => [ "lock",								Config::T_STRING ],
 		Config::CACHE_DIR => [ "cache",									Config::T_STRING ],
+		Config::PLUGINS_LOCAL_DIR => [ "plugins.local",				Config::T_STRING ],
 		Config::AUTH_AUTO_CREATE => [ "true",							Config::T_BOOL ],
 		Config::AUTH_AUTO_LOGIN => [ "true",							Config::T_BOOL ],
 		Config::FORCE_ARTICLE_PURGE => [ 0,								Config::T_INT ],
@@ -521,7 +525,8 @@ class Config {
 
 			$self_url_path = $proto . '://' . $_SERVER["HTTP_HOST"] . parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 			$self_url_path = preg_replace("/(\/api\/{1,})?(\w+\.php)?(\?.*$)?$/", "", $self_url_path);
-			$self_url_path = preg_replace("/(\/plugins(.local)?)\/.{1,}$/", "", $self_url_path);
+			$local_plugins_dir_name = basename(self::get(self::PLUGINS_LOCAL_DIR));
+			$self_url_path = preg_replace("/(\/plugins|\/" . preg_quote($local_plugins_dir_name, '/') . ")\/.{1,}$/", "", $self_url_path);
 		}
 
 		return rtrim($self_url_path, '/');
