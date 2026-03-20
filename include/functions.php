@@ -278,6 +278,13 @@
 		};
 	}
 
+	function resolve_path(string $prefix, string $path): string {
+		if (isset($path[0]) && $path[0] != '/') {
+			return rtrim($prefix, '/') . '/' . $path;
+		}
+		return $path;
+	}
+
 	function with_trailing_slash(string $str) : string {
 		return str_ends_with($str, '/') ? $str : "$str/";
 	}

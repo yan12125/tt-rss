@@ -14,10 +14,7 @@ class Cache_Local implements Cache_Adapter {
 		$cache_dir = Config::get(Config::CACHE_DIR);
 
 		// use absolute path local to current dir if CACHE_DIR is relative
-		// TODO: maybe add a special method to Config() for this?
-		if ($cache_dir[0] != '/')
-			$cache_dir = dirname(__DIR__) . "/$cache_dir";
-
+		$cache_dir = resolve_path(dirname(__DIR__), $cache_dir);
 		$this->dir = $cache_dir . "/" . basename(clean($dir));
 
 		$this->make_dir();
