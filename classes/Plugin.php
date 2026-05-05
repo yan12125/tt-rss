@@ -412,7 +412,7 @@ abstract class Plugin {
 	}
 
 	/** Invoked during feed subscription (after data has been fetched)
-	 * @param string $contents
+	 * @param string|false $contents
 	 * @param string $url
 	 * @param string $auth_login
 	 * @param string $auth_pass
